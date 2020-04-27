@@ -10,7 +10,21 @@
 var gameTable = [];
 
 // max number of tiles
-var max = 100;
+// game difficulty setting:
+// EASY: max = 100
+// NORMAL: max = 80;
+// HARD : max = 50;
+var difficulty = prompt("Please type a difficulty setting between EASY, NORMAL, or HARD");
+
+if (difficulty == "EASY") {
+    var max = 100;
+} else if (difficulty == "NORMAL") {
+    var max = 80;
+} else {
+    var max = 50;
+}
+// min number of tiles
+var min = 1;
 
 // filling the game table with numbers between 1 and max
 for (var i = 0; i < max; i++) {
@@ -60,22 +74,22 @@ function insertionSort (a) {
 
 // MAIN GAME ------------------------------------
 // valid moves counter
-var j = 0;
+var moves = 0;
 
 // game over status:
 // false -> game still be in progress
 // true -> game over
 var gameOver = false;
 
-// print gameTable for clarity
+// print first gameTable for clarity
 console.log(gameTableJoined);
 
 // game loop
-while ( (gameOver == false) && (j < (max - maxBomb) ) ) {
+while ( (gameOver == false) && (moves < (max - maxBomb) ) ) {
     // get a number from the player
-    var playerNum = parseInt(prompt("Please enter a number between 1 and 100: "));
-    // check if given number is between 1 and 100
-    if ((playerNum < 1) || (playerNum > 100)) {
+    var playerNum = parseInt(prompt("Please enter a number between " + min + " and " + max + ": "));
+    // check if given number is between 1 and 100/80/50
+    if ((playerNum < min) || (playerNum > max)) {
         alert("Number out of range, retry.")
     // if the number IS in the gameTable & IS NOT a bomb
     } else if ((gameTable.includes(playerNum)) && (bombList.includes(playerNum) == false)) {
@@ -83,7 +97,7 @@ while ( (gameOver == false) && (j < (max - maxBomb) ) ) {
         // overwriting the tiles' number is needed because gameTable's length must stay the same throughout the game
         gameTable.splice(playerNum - 1, 1, "NULL");
         // increase valid moves counter
-        j++;
+        moves++;
         // print a new gametable
         console.log(gameTable.join(", "));
     // if the number IS NOT in the gameTable, then it's a NULL and it was erased previously
@@ -109,12 +123,12 @@ if (gameOver == false) {
 
 // game stats:
 // number of right guesses
-// full bomb list
-if (j = 1) {
-    // You guessed right
-    console.log("You guessed right " + j + " time.");
+if (moves == 1) {
+    // You guessed right 1 time
+    console.log("You guessed right " + moves + " time.");
 } else {
-    console.log("You guessed right " + j + " times.");
+    // You guessed right n times
+    console.log("You guessed right " + moves + " times.");
 }
-
+// full bomb list
 console.log("The bomb list was: " + bombListJoined + ".");
