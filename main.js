@@ -9,20 +9,29 @@
 // initializing gameTable
 var gameTable = [];
 
-// max number of tiles
+
 // game difficulty setting:
 // EASY: max = 100
 // NORMAL: max = 80;
 // HARD : max = 50;
-var difficulty = prompt("Please type a difficulty setting between EASY, NORMAL, or HARD");
 
-if (difficulty == "EASY") {
-    var max = 100;
-} else if (difficulty == "NORMAL") {
-    var max = 80;
-} else {
-    var max = 50;
+// max number of tiles
+var max = 0;
+
+while ((max != 100) && (max != 80) && (max != 50)) {
+    alert("Please choose a difficulty setting between 0, 1, and 2");
+    var difficulty = parseInt(prompt("0 = 100 tiles, 1 = 80 tiles, 2 = 50 tiles"));
+    if (difficulty == 0) {
+        var max = 100;
+    } else if (difficulty == 1) {
+        var max = 80;
+    } else if (difficulty == 2) {
+        var max = 50;
+    } else {
+        alert("Wrong setting. Please type EASY, NORMAL or HARD.")
+    }
 }
+
 // min number of tiles
 var min = 1;
 
@@ -90,7 +99,7 @@ while ( (gameOver == false) && (moves < (max - maxBomb) ) ) {
     var playerNum = parseInt(prompt("Please enter a number between " + min + " and " + max + ": "));
     // check if given number is between 1 and 100/80/50
     if ((playerNum < min) || (playerNum > max)) {
-        alert("Number out of range, retry.")
+        alert("Number out of range, retry.");
     // if the number IS in the gameTable & IS NOT a bomb
     } else if ((gameTable.includes(playerNum)) && (bombList.includes(playerNum) == false)) {
         // replace said number with NULL
